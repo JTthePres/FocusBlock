@@ -19,6 +19,7 @@ function addSite(params) {
         });
         updateUI(urlList);
       });
+      updateNetBlockList(url,0);
     });
   }
 
@@ -47,3 +48,58 @@ function addSite(params) {
     }
     listContainer.appendChild(ul);
   }});
+function updateNetBlockList(url,len) {
+
+/*       let id = len + 1;
+    
+      chrome.declarativeNetRequest.updateDynamicRules({
+        addRules: [
+          {
+            id: 10,
+            priority: 1,
+            action: { type: 'block' },
+            condition: { urlFilter: url, resourceTypes: ['main_frame'] },
+          },
+        ],
+        removeRuleIds: [id],
+    }); */
+/*     const newRules =  [
+      {
+        id: 10,
+        priority: 1,
+        action: { type: 'block' },
+        condition: { urlFilter: url, resourceTypes: ['main_frame'] },
+      },
+    ];
+const oldRules =  chrome.declarativeNetRequest.getDynamicRules();
+const oldRuleIds = oldRules.map(rule => rule.id);
+
+// Use the arrays to update the dynamic rules
+ chrome.declarativeNetRequest.updateDynamicRules({
+  removeRuleIds: oldRuleIds,
+  addRules: newRules
+}); */
+chrome.declarativeNetRequest.updateDynamicRules({
+  removeRuleIds: [1],
+    addRules: [
+    {
+      id: 1,
+      priority: 1,
+      action: { type: 'block' },
+      condition: { urlFilter: "https://www.google.com/*", resourceTypes: ['main_frame'] },
+    },
+  ],
+});
+url+= "*"
+chrome.declarativeNetRequest.updateDynamicRules({
+  removeRuleIds: [10],
+  addRules: [
+    {
+      id: 10,
+      priority: 1,
+      action: { type: 'block' },
+      condition: { urlFilter: url, resourceTypes: ['main_frame'] },
+    },
+  ],
+});
+}
