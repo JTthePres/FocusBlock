@@ -2,13 +2,36 @@
     "manifest_version": 3,
     "name": "FocusBlock",
     "version": "1.0.1",
+    "background": {
+      "service_worker": "background.js"
+    },
     "action":{
         "default_popup": "./src/pages/index.html",
         "default_title": "FocusBlock"
     },
-    "permissions" :[
+    "declarative_net_request": {
+      "rule_resources": [
+        {
+          "id": "ruleset_1",
+          "enabled": true,
+          "path": "rules.json"
+        }
+      ]
+    },
+    "web_accessible_resources": [
+      {
+        "resources": [ "a.png"],
+        "matches": [ "https://web-accessible-resources-1.glitch.me/*" ]
+      }
+    ],
+    
+       "permissions" :[
         "tabs",
         "storage",
-        "activeTab"
-    ]
+        "activeTab",
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback",
+        "declarativeNetRequestWithHostAccess"
+      ],
+      "key": "FocusBlockjt"
   }

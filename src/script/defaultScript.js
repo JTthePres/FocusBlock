@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("addSite").addEventListener("click", addSite);
 
 function addSite(params) {
@@ -45,4 +46,4 @@ function addSite(params) {
       listContainer.removeChild(listContainer.firstChild);
     }
     listContainer.appendChild(ul);
-  }
+  }});
