@@ -9,6 +9,20 @@
         "urlFilter": "https://www.google.com/*",
         "resourceTypes": ["main_frame"]
       }
+    },
+    {
+      "id": 2,
+      "priority": 1,
+      "action": {
+        "type": "redirect",
+        "redirect": {
+          "url": "https://translate.google.it/"
+        }
+      },
+      "condition": {
+        "urlFilter": "https://developer.chrome.com/docs/extensions/reference/browserAction/",
+        "resourceTypes": ["main_frame"]
+      }
     }
   ]
   

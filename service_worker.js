@@ -1,5 +1,5 @@
-/* 
-chrome.webRequest.onBeforeRequest.addListener(
+'use strict';
+/* chrome.webRequest.onBeforeRequest.addListener(
     function (details) {
       // URL del sito a cui si sta cercando di accedere
       const requestedUrl = details.url;
@@ -21,18 +21,19 @@ chrome.webRequest.onBeforeRequest.addListener(
       types: ["main_frame"],
     },
     ["blocking"]
-  );
- */
-  'use strict';
+  ); */
 
-  chrome.declarativeNetRequest.onRuleMatchedDebug.addListener((e) => {
-    const msg = `Navigation blocked to ${e.request.url} on tab ${e.request.tabId}.`;
-    console.log(msg);
-  });
+  // 
+
+  // chrome.declarativeNetRequest.onRuleMatchedDebug.addListener((e) => {
+  //   const msg = `Navigation blocked to ${e.request.url} on tab ${e.request.tabId}.`;
+  //   console.log(msg);
+  // });
   
-  console.log('Service worker started.');
-  chrome.declarativeNetRequest.onRequest.getBlocked((details) => {
-    // Verifica se la richiesta è stata bloccata per uno degli URL nella tua lista
-      // La richiesta è stata bloccata, quindi crea una nuova scheda con la "splash screen"
-      chrome.tabs.create({ url: "src/pages/blockPage.html" });
-  });
+  // console.log('Service worker started.');
+  // chrome.declarativeNetRequest.onRequest.getBlocked((details) => {
+  //   // Verifica se la richiesta è stata bloccata per uno degli URL nella tua lista
+  //     // La richiesta è stata bloccata, quindi crea una nuova scheda con la "splash screen"
+  //     chrome.tabs.create({ url: "src/pages/blockPage.html" });
+  // });
+
