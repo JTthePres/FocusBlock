@@ -1,12 +1,12 @@
 [
    
     {
-      "id": 2,
+      "id": 20,
       "priority": 1,
       "action": {
         "type": "redirect",
         "redirect": {
-          "url": "https://translate.google.it/"
+          "redirect": { "extensionPath": "/pages/splashPage.html" }          
         }
       },
       "condition": {

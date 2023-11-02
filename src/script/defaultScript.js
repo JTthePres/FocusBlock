@@ -2,24 +2,25 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("addSite").addEventListener("click", addSite);
 
 function addSite(params) {
+  var storageLen;
     // Query per l'URL della pagina attualmente attiva
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
       let url = tabs[0].url;
 
       // Recupera l'elenco esistente di URL dallo storage di sincronizzazione
       chrome.storage.sync.get({ key: [] }, (data) => {
-        let urlList = data.key;
-
+        let urlList = data.key;       
         // Aggiungi l'URL attuale alla lista
         urlList.push(url);
-
+        storageLen = urlList.length;
         // Salva la lista aggiornata nello storage di sincronizzazione
         chrome.storage.sync.set({ key: urlList }, () => {
           console.log("URL added to the list.");
+          updateNetBlockList(url,storageLen);
+
         });
         updateUI(urlList);
       });
-      updateNetBlockList(url,0);
     });
   }
 
@@ -48,7 +49,8 @@ function addSite(params) {
     }
     listContainer.appendChild(ul);
   }});
-function updateNetBlockList(url,len) {
+
+function updateNetBlockList(url,storageLen) {
 
 /*       let id = len + 1;
     
@@ -79,23 +81,13 @@ const oldRuleIds = oldRules.map(rule => rule.id);
   removeRuleIds: oldRuleIds,
   addRules: newRules
 }); */
-chrome.declarativeNetRequest.updateDynamicRules({
-  removeRuleIds: [1],
-    addRules: [
-    {
-      id: 1,
-      priority: 1,
-      action: { type: 'block' },
-      condition: { urlFilter: "https://www.google.com/*", resourceTypes: ['main_frame'] },
-    },
-  ],
-});
+console.log(storageLen);
 url+= "*"
 chrome.declarativeNetRequest.updateDynamicRules({
-  removeRuleIds: [10],
+  removeRuleIds: [storageLen],
   addRules: [
     {
-      id: 10,
+      id: storageLen,
       priority: 1,
       action: { type: 'block' },
       condition: { urlFilter: url, resourceTypes: ['main_frame'] },
