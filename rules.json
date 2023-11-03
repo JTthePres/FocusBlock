@@ -6,7 +6,7 @@
       "action": {
         "type": "redirect",
         "redirect": {
-          "redirect": { "extensionPath": "/pages/splashPage.html" }          
+          "extensionPath": "/src/pages/splashPage.html"   
         }
       },
       "condition": {

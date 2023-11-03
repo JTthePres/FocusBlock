@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("addSite").addEventListener("click", addSite);
-
+document.getElementById("settingsButton").addEventListener("click",function () {
+  chrome.tabs.create({ url: chrome.runtime.getURL("../src/pages/settingsPage.html") });});
 function addSite(params) {
   var storageLen;
     // Query per l'URL della pagina attualmente attiva
@@ -89,9 +90,13 @@ chrome.declarativeNetRequest.updateDynamicRules({
     {
       id: storageLen,
       priority: 1,
-      action: { type: 'block' },
+      action: { type: 'redirect',       
+       "redirect": {
+        "extensionPath": "/src/pages/splashPage.html"   
+      } },
       condition: { urlFilter: url, resourceTypes: ['main_frame'] },
     },
   ],
 });
 }
+

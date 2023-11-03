@@ -37,3 +37,30 @@
   //     chrome.tabs.create({ url: "src/pages/blockPage.html" });
   // });
 
+  chrome.runtime.onInstalled.addListener(function(details) {
+    if (details.reason === "install") {
+      // Questo codice verrà eseguito solo all'installazione dell'estensione
+      console.log("Estensione installata!");
+  
+      // Elimina tutto il Chrome storage
+      chrome.storage.sync.clear(function() {
+        if (chrome.runtime.lastError) {
+          console.error("Errore durante la cancellazione del Chrome storage:", chrome.runtime.lastError);
+        } else {
+          console.log("Chrome storage eliminato con successo!");
+        }
+      });
+      
+    } chrome.declarativeNetRequest.updateDynamicRules({
+    removeRuleIds: [2]
+  }, function() {
+    if (chrome.runtime.lastError) {
+      console.error("Errore durante l'eliminazione delle regole di reindirizzamento:", chrome.runtime.lastError);
+    } else {
+      console.log("Tutte le regole di reindirizzamento eliminate con successo!");
+    }
+  });
+  });
+  
+  
+ 
