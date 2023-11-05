@@ -20,7 +20,7 @@ chrome.storage.sync.get({ key: [] }, (data) => {
 var deleteButtons = document.getElementsByClassName("deleteButton");
 
 // Itera su ciascun pulsante e aggiungi un gestore di eventi
-for (var i = 0; i < deleteButtons.length; i++) {
+/* for (var i = 0; i < deleteButtons.length; i++) {
   deleteButtons[i].addEventListener("click", function () {
     var index = this.parentNode.getAttribute("data-value");
     chrome.declarativeNetRequest.updateDynamicRules({
@@ -40,7 +40,7 @@ for (var i = 0; i < deleteButtons.length; i++) {
       }
     });
   });
-}
+} */
   }
 
 })
