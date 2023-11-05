@@ -3,7 +3,7 @@
     "name": "FocusBlock",
     "version": "1.0.1",
     "background": {
-      "service_worker": "background.js"
+      "service_worker": "service_worker.js"
     },
     "action":{
         "default_popup": "./src/pages/index.html",
@@ -18,12 +18,14 @@
         }
       ]
     },
-    "web_accessible_resources": [
-      {
-        "resources": [ "a.png"],
-        "matches": [ "https://web-accessible-resources-1.glitch.me/*" ]
-      }
-    ],
+     "web_accessible_resources": [
+         {
+          "resources": [ "splashPage.html" ],
+          "matches": ["<all_urls>"],
+          "use_dynamic_url": true
+        }
+      ],
+      
     
        "permissions" :[
         "tabs",
@@ -33,5 +35,6 @@
         "declarativeNetRequestFeedback",
         "declarativeNetRequestWithHostAccess"
       ],
-      "key": "FocusBlockjt"
+      "host_permissions": ["https://*/"]
+
   }

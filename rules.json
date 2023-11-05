@@ -1,12 +1,16 @@
 [
+   
     {
-      "id": 1,
+      "id": 20,
       "priority": 1,
       "action": {
-        "type": "block"
+        "type": "redirect",
+        "redirect": {
+          "extensionPath": "/src/pages/splashPage.html"   
+        }
       },
       "condition": {
-        "urlFilter": "https://www.google.com/*",
+        "urlFilter": "https://developer.chrome.com/docs/extensions/reference/browserAction/",
         "resourceTypes": ["main_frame"]
       }
     }
