@@ -52,7 +52,7 @@
       });
       
     } chrome.declarativeNetRequest.updateDynamicRules({
-    removeRuleIds: [2]
+    removeRuleIds: [1]
   }, function() {
     if (chrome.runtime.lastError) {
       console.error("Errore durante l'eliminazione delle regole di reindirizzamento:", chrome.runtime.lastError);
@@ -60,7 +60,10 @@
       console.log("Tutte le regole di reindirizzamento eliminate con successo!");
     }
   });
+  chrome.storage.sync.set({ urlList: []}, function () {
+    console.log("list initialized")
   });
+});
   
   
  

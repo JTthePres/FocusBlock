@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-chrome.storage.sync.get({ key: [] }, (data) => {
-    const urlList = data.key;
+  chrome.storage.sync.get({ urlList: [] }, (data) => {
+    // Recupera l'array urlList dallo storage o inizializzalo come un array vuoto se non esiste
+    let urlList = data.urlList;
     updateUI(urlList);
   });
 
@@ -11,7 +12,7 @@ chrome.storage.sync.get({ key: [] }, (data) => {
     urlList.forEach((url) => {
     document.querySelector('#list').insertAdjacentHTML('beforeend', ` 
     <div  class="site" data-value="${index}">
-        ${url}
+        <div class="key" data-value="${url}">${url}</div>
         <button class="deleteButton">delete</button>
         </div>
     `)
@@ -20,27 +21,39 @@ chrome.storage.sync.get({ key: [] }, (data) => {
 var deleteButtons = document.getElementsByClassName("deleteButton");
 
 // Itera su ciascun pulsante e aggiungi un gestore di eventi
-/* for (var i = 0; i < deleteButtons.length; i++) {
+for (var i = 0; i < deleteButtons.length; i++) {
   deleteButtons[i].addEventListener("click", function () {
-    var index = this.parentNode.getAttribute("data-value");
-    chrome.declarativeNetRequest.updateDynamicRules({
-      removeRuleIds: [index]
+    var key = this.parentNode.children[0].getAttribute("data-value");
+
+    console.log(key);
+    typeof key;
+    var index;
+    chrome.storage.sync.get({ urlList: [] }, (data) => {
+      // Recupera l'array urlList dallo storage o inizializzalo come un array vuoto se non esiste
+      let urlList = data.urlList;
+      index = urlList.indexOf(key);
+      let tmp = urlList.splice(index,1);
+      // Salva l'array aggiornato nello storage di sincronizzazione
+      chrome.storage.sync.set({ urlList: urlList }, () => {
+        console.log("URL eliminato correttamente.");      
+        updateUI(urlList);
+
+      });
+       tmp =index+1;
+    console.log(index);
+        chrome.declarativeNetRequest.updateDynamicRules({
+
+      removeRuleIds: [tmp]
     }, function() {
       if (chrome.runtime.lastError) {
         console.error("Errore durante l'eliminazione delle regole di reindirizzamento:", chrome.runtime.lastError);
       } else {
         console.log("Regola eliminata con successo!");
       }
-    });
-    chrome.storage.sync.remove(index-1, function() {
-      if (chrome.runtime.lastError) {
-        console.error("Errore durante la rimozione dell'elemento:", chrome.runtime.lastError);
-      } else {
-        console.log("Elemento rimosso con successo!");
-      }
-    });
+    }); 
   });
-} */
-  }
-
-})
+    });
+    
+}
+ }
+ });
