@@ -36,5 +36,5 @@ chrome.storage.local.get(['blockStatus'], async function (result) {
   });
 });
   
-  
+
  

@@ -15,33 +15,38 @@ document.getElementById("settingsButton").addEventListener("click",function () {
   });
 
 
-function addSite() {
-  var storageLen;
-    // Query per l'URL della pagina attualmente attiva
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-      const current_urll = new URL(tabs[0].url);
-      const url = current_urll.origin;
-      chrome.storage.sync.get({ urlList: [] }, (data) => {
-        // Recupera l'array urlList dallo storage o inizializzalo come un array vuoto se non esiste
-        let urlList = data.urlList || [];
-      
-        // Aggiungi il nuovo URL alla fine dell'array
-        urlList.push(url);
-      
-        // Salva l'array aggiornato nello storage di sincronizzazione
-        chrome.storage.sync.set({ urlList: urlList }, () => {
-          console.log("URL aggiunto in ultima posizione alla lista.");
-          //if(checkStatus())
-            updateNetBlockList(url, urlList.length );
+
+  function addSite() {
+    var storageLen;
+      // Query per l'URL della pagina attualmente attiva
+      chrome.storage.local.get(['blockStatus'], function (result) {
+        let blockStatus = result.blockStatus;
+        chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+        const current_urll = new URL(tabs[0].url);
+        const url = current_urll.origin;
+        chrome.storage.sync.get({ urlList: [] }, (data) => {
+          // Recupera l'array urlList dallo storage o inizializzalo come un array vuoto se non esiste
+          let urlList = data.urlList || [];
+        
+          // Aggiungi il nuovo URL alla fine dell'array
+          urlList.push(url);
+        
+          // Salva l'array aggiornato nello storage di sincronizzazione
+          chrome.storage.sync.set({ urlList: urlList }, () => {
+            console.log("URL aggiunto in ultima posizione alla lista.");
+            //if(checkStatus())
+            if (blockStatus == "ON") {
+
+              updateNetBlockList(url, urlList.length );}
+          });
+          updateUI(urlList);
         });
-        updateUI(urlList);
+        
       });
-      
-    });
-  }
 
-
-
+    });}
+  
+  
 
   function updateUI(urlList) {
     const listContainer = document.getElementById("list");

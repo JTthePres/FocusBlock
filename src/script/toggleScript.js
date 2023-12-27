@@ -15,9 +15,3 @@ toggle.addEventListener('change', function() {
   }
 });
 
-function checkStatus() {
-chrome.storage.local.get(['blockStatus'], async function (result) {
-    let blockStatus = result.blockStatus
-    return blockStatus=="ON"?true:false;
-})
-}
