@@ -1,35 +1,47 @@
 document.addEventListener("DOMContentLoaded", function () {
+
 document.getElementById("addSite").addEventListener("click", addSite);
+
 document.getElementById("settingsButton").addEventListener("click",function () {
-  chrome.tabs.create({ url: chrome.runtime.getURL("../src/pages/settingsPage.html") });});
-function addSite(params) {
-  var storageLen;
-    // Query per l'URL della pagina attualmente attiva
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-      let url = tabs[0].url;
+  chrome.tabs.create({ url: chrome.runtime.getURL("../src/pages/settingsPage.html") });
+});
 
-      // Recupera l'elenco esistente di URL dallo storage di sincronizzazione
-      chrome.storage.sync.get({ key: [] }, (data) => {
-        let urlList = data.key;       
-        // Aggiungi l'URL attuale alla lista
-        urlList.push(url);
-        storageLen = urlList.length;
-        // Salva la lista aggiornata nello storage di sincronizzazione
-        chrome.storage.sync.set({ key: urlList }, () => {
-          console.log("URL added to the list.");
-          updateNetBlockList(url,storageLen);
 
-        });
-        updateUI(urlList);
-      });
-    });
-  }
 
   // Chiama la funzione updateUI al caricamento della pagina
   chrome.storage.sync.get({ key: [] }, (data) => {
     const urlList = data.key;
     updateUI(urlList);
   });
+
+
+function addSite() {
+  var storageLen;
+    // Query per l'URL della pagina attualmente attiva
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+      const current_urll = new URL(tabs[0].url);
+      const url = current_urll.origin;
+      chrome.storage.sync.get({ urlList: [] }, (data) => {
+        // Recupera l'array urlList dallo storage o inizializzalo come un array vuoto se non esiste
+        let urlList = data.urlList || [];
+      
+        // Aggiungi il nuovo URL alla fine dell'array
+        urlList.push(url);
+      
+        // Salva l'array aggiornato nello storage di sincronizzazione
+        chrome.storage.sync.set({ urlList: urlList }, () => {
+          console.log("URL aggiunto in ultima posizione alla lista.");
+          //if(checkStatus())
+            updateNetBlockList(url, urlList.length );
+        });
+        updateUI(urlList);
+      });
+      
+    });
+  }
+
+
+
 
   function updateUI(urlList) {
     const listContainer = document.getElementById("list");
@@ -53,35 +65,6 @@ function addSite(params) {
 
 function updateNetBlockList(url,storageLen) {
 
-/*       let id = len + 1;
-    
-      chrome.declarativeNetRequest.updateDynamicRules({
-        addRules: [
-          {
-            id: 10,
-            priority: 1,
-            action: { type: 'block' },
-            condition: { urlFilter: url, resourceTypes: ['main_frame'] },
-          },
-        ],
-        removeRuleIds: [id],
-    }); */
-/*     const newRules =  [
-      {
-        id: 10,
-        priority: 1,
-        action: { type: 'block' },
-        condition: { urlFilter: url, resourceTypes: ['main_frame'] },
-      },
-    ];
-const oldRules =  chrome.declarativeNetRequest.getDynamicRules();
-const oldRuleIds = oldRules.map(rule => rule.id);
-
-// Use the arrays to update the dynamic rules
- chrome.declarativeNetRequest.updateDynamicRules({
-  removeRuleIds: oldRuleIds,
-  addRules: newRules
-}); */
 console.log(storageLen);
 url+= "*"
 chrome.declarativeNetRequest.updateDynamicRules({
