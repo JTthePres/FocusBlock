@@ -19,8 +19,8 @@ function addSite() {
   var storageLen;
     // Query per l'URL della pagina attualmente attiva
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-      let url = tabs[0].url;
-
+      const current_urll = new URL(tabs[0].url);
+      const url = current_urll.origin;
       chrome.storage.sync.get({ urlList: [] }, (data) => {
         // Recupera l'array urlList dallo storage o inizializzalo come un array vuoto se non esiste
         let urlList = data.urlList || [];
