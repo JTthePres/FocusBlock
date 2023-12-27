@@ -31,7 +31,8 @@ function addSite() {
         // Salva l'array aggiornato nello storage di sincronizzazione
         chrome.storage.sync.set({ urlList: urlList }, () => {
           console.log("URL aggiunto in ultima posizione alla lista.");
-          updateNetBlockList(url, urlList.length );
+          //if(checkStatus())
+            updateNetBlockList(url, urlList.length );
         });
         updateUI(urlList);
       });
