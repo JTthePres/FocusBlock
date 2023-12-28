@@ -6,16 +6,6 @@ document.getElementById("settingsButton").addEventListener("click",function () {
   chrome.tabs.create({ url: chrome.runtime.getURL("../src/pages/settingsPage.html") });
 });
 
-
-
-  // Chiama la funzione updateUI al caricamento della pagina
-  chrome.storage.sync.get({ key: [] }, (data) => {
-    const urlList = data.key;
-    updateUI(urlList);
-  });
-
-
-
   function addSite() {
     var storageLen;
       // Query per l'URL della pagina attualmente attiva
@@ -34,12 +24,12 @@ document.getElementById("settingsButton").addEventListener("click",function () {
           // Salva l'array aggiornato nello storage di sincronizzazione
           chrome.storage.sync.set({ urlList: urlList }, () => {
             console.log("URL aggiunto in ultima posizione alla lista.");
+            updateUI();
             //if(checkStatus())
             if (blockStatus == "ON") {
+              addNetBlockList(url, urlList.length );}
 
-              updateNetBlockList(url, urlList.length );}
           });
-          updateUI(urlList);
         });
         
       });
@@ -48,27 +38,17 @@ document.getElementById("settingsButton").addEventListener("click",function () {
   
   
 
-  function updateUI(urlList) {
-    const listContainer = document.getElementById("list");
-
-    // Crea un elenco non ordinato (ul) per visualizzare gli URL
-    const ul = document.createElement("ul");
-
-    // Popola l'elenco con gli URL dallo storage
-    urlList.forEach((url) => {
-      const li = document.createElement("li");
-      li.textContent = url;
-      ul.appendChild(li);
-    });
-
-    // Sostituisci il contenuto precedente con il nuovo elenco
-    while (listContainer.firstChild) {
-      listContainer.removeChild(listContainer.firstChild);
-    }
-    listContainer.appendChild(ul);
+  function updateUI() {
+    const banner = document.getElementById("banner");
+    banner.style.display = "block";
+    // Set the banner text
+    banner.textContent = "URL successfully added to the list!";
+    setTimeout(function() {
+      banner.style.display = "none";
+    }, 1000);
   }});
 
-function updateNetBlockList(url,storageLen) {
+function addNetBlockList(url,storageLen) {
 
 console.log(storageLen);
 url+= "*"

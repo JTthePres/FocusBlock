@@ -1,10 +1,7 @@
 'use strict';
-chrome.storage.local.get(['blockStatus'], async function (result) {
-  let blockStatus = result.blockStatus
-  if (blockStatus === undefined) {
 
-      chrome.storage.local.set({blockStatus: "OFF"}, function () {}); // save it in local.
-  }})
+
+  // CLEANING AND INSTANTIATE AT THE FIRST INSTALLATION
   chrome.runtime.onInstalled.addListener(function(details) {
     if (details.reason === "install") {
       // Questo codice verrà eseguito solo all'installazione dell'estensione
@@ -34,7 +31,24 @@ chrome.storage.local.get(['blockStatus'], async function (result) {
   chrome.storage.sync.set({ urlList: []}, function () {
     console.log("list initialized")
   });
-});
+  chrome.storage.local.get(['blockStatus'], async function (result) {
+    let blockStatus = result.blockStatus
+    if (blockStatus === undefined) {
   
+        chrome.storage.local.set({blockStatus: "OFF"}, function () {}); // save it in local.
+    }})
+});
+
+
+// SWITCH TO TOGGLE OFF AT STARTUP
+chrome.runtime.onStartup.addListener(function() {
+  chrome.storage.local.get(['blockStatus'], async function (result) {
+    let blockStatus = result.blockStatus
+    if (blockStatus === undefined) {
+  
+        chrome.storage.local.set({blockStatus: "OFF"}, function () {}); // save it in local.
+    }})
+
+ })  
 
  
