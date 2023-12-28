@@ -1,5 +1,12 @@
-// Assume che il tuo elemento HTML abbia un ID 'customCheckbox'
+// Assume your HTML element has an ID 'customCheckbox'
 const toggle = document.getElementById('customCheckbox');
+
+// Set the initial state of the toggle based on the stored blockStatus
+document.addEventListener('DOMContentLoaded', function() {
+  chrome.storage.local.get('blockStatus', function(data) {
+    toggle.checked = data.blockStatus == "ON";
+  });
+});
 
 toggle.addEventListener('change', function() {
   const currentStatus = toggle.checked;
@@ -7,17 +14,13 @@ toggle.addEventListener('change', function() {
   if (currentStatus) {
     chrome.storage.local.set({ blockStatus: "ON" }, function () {
       console.log("Block status set to ON");
+      createNetBlockList();
     });
   } else {
     chrome.storage.local.set({ blockStatus: "OFF" }, function () {
       console.log("Block status set to OFF");
+      cleanNetBlockList();
     });
   }
 });
 
-function checkStatus() {
-chrome.storage.local.get(['blockStatus'], async function (result) {
-    let blockStatus = result.blockStatus
-    return blockStatus=="ON"?true:false;
-})
-}
