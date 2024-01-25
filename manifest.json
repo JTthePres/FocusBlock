@@ -33,6 +33,7 @@
         "activeTab",
         "declarativeNetRequest",
         "declarativeNetRequestFeedback",
+        "downloads",
         "declarativeNetRequestWithHostAccess"
       ],
       "host_permissions": ["https://*/"]
