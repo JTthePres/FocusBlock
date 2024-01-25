@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("deleteAll").addEventListener("click", deleteAll);
+  document.getElementById("exportBtn").addEventListener("click", exportAll);
+
   chrome.storage.sync.get({ urlList: [] }, (data) => {
     // Recupera l'array urlList dallo storage o inizializzalo come un array vuoto se non esiste
     let urlList = data.urlList;
@@ -103,5 +105,8 @@ function deleteAll() {
   });    
   document.querySelector('#list').innerHTML = '';
 
+}
+function exportAll(params) {
+  
 }
 });
