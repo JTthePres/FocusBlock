@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("deleteAll").addEventListener("click", deleteAll);
   document.getElementById("exportBtn").addEventListener("click", exportAll);
+  document.getElementById("importBtn").addEventListener("click", importAll);
 
   chrome.storage.sync.get({ urlList: [] }, (data) => {
     // Recupera l'array urlList dallo storage o inizializzalo come un array vuoto se non esiste
@@ -32,23 +33,23 @@ document.addEventListener("DOMContentLoaded", function () {
         manageDelete(event, element_index);
       });
     }
-          }
+  }
           
 
-          
-        function manageDelete(event,element_index) {
-          var key = event.currentTarget.parentNode.children[0].getAttribute("data-value");
-          console.log(key);
-          typeof key;
-          chrome.storage.sync.get({ urlList: [] }, (data) => {
-            let urlList = data.urlList;
-            remove_index = urlList.indexOf(key);
-            let tmp = urlList.splice(remove_index, 1);
+  
+function manageDelete(event,element_index) {
+  var key = event.currentTarget.parentNode.children[0].getAttribute("data-value");
+  console.log(key);
+  typeof key;
+  chrome.storage.sync.get({ urlList: [] }, (data) => {
+    let urlList = data.urlList;
+    remove_index = urlList.indexOf(key);
+    let tmp = urlList.splice(remove_index, 1);
 
-            chrome.storage.sync.set({ urlList: urlList }, () => {
-              console.log("URL eliminato correttamente.");
-              updateUI(urlList);
-            });
+    chrome.storage.sync.set({ urlList: urlList }, () => {
+      console.log("URL eliminato correttamente.");
+      updateUI(urlList);
+    });
 
     tmp = remove_index + 1;
     console.log(remove_index);
@@ -118,5 +119,22 @@ function exportAll(params) {
         filename: 'filename_of_exported_file.json'
     });
 });
+}
+function importAll() {
+
+  var reader = new FileReader();
+  reader.addEventListener('load', function() {
+    deleteAll();
+    var result = JSON.parse(reader.result);
+    console.log(result);
+    chrome.storage.sync.set(result, () => {
+      console.log("Dati importati correttamente.");
+    });
+    updateUI(result.urlList);    
+
+  });
+  reader.readAsText(document.querySelector('input').files[0]);
+
+
 }
 });
