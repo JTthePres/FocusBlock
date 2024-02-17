@@ -1,5 +1,9 @@
+html{
+  width: fit-content;
+  height: fit-content;
+}
 body{
-    background-color: aqua;
+  background-color: rgb(230, 88, 88);
 }
 .slider:after
 {
@@ -100,4 +104,17 @@ input:checked + .slider:before {
   padding : 10px;
   margin-top: 10px;
   text-align: center;
+}
+#settingsButton{
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+.buttons{
+  width: 50%;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #494949;
+  border-color: transparent;
+  color: #f7f1eb;
 }

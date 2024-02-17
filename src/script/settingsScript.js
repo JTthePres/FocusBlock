@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("exportBtn").addEventListener("click", exportAll);
   document.getElementById("importBtn").addEventListener("click", importAll);
 
+
   chrome.storage.sync.get({ urlList: [] }, (data) => {
     let urlList = data.urlList;
     updateUI(urlList);
@@ -120,6 +121,7 @@ function importAll() {
   var reader = new FileReader();
   reader.addEventListener('load', function() {
     deleteAll();
+    cleanNetBlockList();
     var result = JSON.parse(reader.result);
     console.log(result);
     chrome.storage.sync.set(result, () => {
@@ -129,5 +131,6 @@ function importAll() {
 
   });
   reader.readAsText(document.querySelector('input').files[0]);
+  createNetBlockList();
 }
 });
