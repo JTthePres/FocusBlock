@@ -3,7 +3,7 @@
 
   // CLEANING AND INSTANTIATE AT THE FIRST INSTALLATION
   chrome.runtime.onInstalled.addListener(function(details) {
-    if (details.reason === "install") {
+    if (chrome.runtime.OnInstalledReason == "install") {
       // Questo codice verrà eseguito solo all'installazione dell'estensione
       console.log("Estensione installata!");
   
@@ -14,9 +14,9 @@
         } else {
           console.log("Chrome storage eliminato con successo!");
         }
-      });
+      }); 
       
-    } 
+     
     for (let i = 0; i < 100; i++) {
       chrome.declarativeNetRequest.updateDynamicRules({
     removeRuleIds: [i]
@@ -37,7 +37,8 @@
   
         chrome.storage.local.set({blockStatus: "OFF"}, function () {}); // save it in local.
     }})
-});
+  }
+  });
 
 
 // SWITCH TO TOGGLE OFF AT STARTUP

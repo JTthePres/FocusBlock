@@ -4,16 +4,24 @@
         <title>FOCUSBLOCK</title>
         <meta charset="utf-8">    </head>
         <link rel=stylesheet href="../../src/style/defaultStyle.css" type="text/css">
+        <link rel=stylesheet href="../../src/style/settingsStyle.css" type="text/css">
         <body>
-        <h1>
-            SETTINGS:
-        </h1>
-        <button id="deleteAll">Delete All</button>
+        <div id="settingsPanel">
+            <div id="settingsTitle">Settings</div>
+            <div id="settingsButtons"><button class="buttons" id="deleteAll">Delete All</button></div>
+        </div>
+        
         <div id="list"></div>
         <button id ="exportBtn">Export List</button>
-        <button id ="importBtn">Import List</button>
+        <input type="file" id="fileInput"  />
 
+        <button  id ="importBtn">ImportFile
+        </button>
+
+        
     </body>   
+
     <script type="application/javascript" src="../../src/script/settingsScript.js"> </script> 
     <script type="application/javascript" src="../../src/script/rules_worker.js"> </script> 
+
 </html>
