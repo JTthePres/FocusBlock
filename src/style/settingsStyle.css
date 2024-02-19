@@ -56,3 +56,18 @@
   border-right: 0px;
   max-width:min-content;
 }
+#popupInport{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 4px solid #494949;
+  border-radius: 10px; 
+  padding: 20px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #494949;
+  background-color: #f7f1eb;
+}
