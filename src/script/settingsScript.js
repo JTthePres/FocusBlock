@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("deleteAll").addEventListener("click", deleteAll);
   document.getElementById("exportBtn").addEventListener("click", exportAll);
-  //document.getElementById("importBtn").addEventListener("click", importAll);
   document.getElementById("openInportMenu").addEventListener("click", openInportPopup);
 
 
@@ -117,6 +116,24 @@ function exportAll(params) {
     });
 });
 }
+function openInportPopup() {
+  popupContainer = document.getElementById("popupContainer");
+
+  popupContainer.innerHTML = `
+    <div id="popupInport">
+        <div id="closePopup">&times;</div>
+        <input type="file" id="fileInput"  />
+
+        <button  id ="importBtn">ImportFile
+        </button>
+    </div>
+  `;  
+  document.addEventListener("mousedown", handleOutClick);
+  document.getElementById("importBtn").addEventListener("click", importAll);
+  document.querySelector("#closePopup").addEventListener("click", function() {
+  popupContainer.innerHTML = "";
+  });
+}
 function importAll() {
 
   var reader = new FileReader();
@@ -135,31 +152,11 @@ function importAll() {
   createNetBlockList();
 }
 });
-function openInportPopup() {
-  popupContainer = document.getElementById("popupContainer");
-
-  popupContainer.innerHTML = `
-    <div id="popupInport">
-        <div id="closePopup">&times;</div>
-        <input type="file" id="fileInput"  />
-
-        <button  id ="importBtn">ImportFile
-        </button>
-    </div>
-  `;  
-  document.addEventListener("mousedown", handleOutClick);
-
-
-  document.querySelector("#closePopup").addEventListener("click", function() {
-  popupContainer.innerHTML = "";
-  });
-}
 function handleOutClick(event) {
   popupContainer = document.getElementById("popupContainer");
   if (!popupContainer.contains(event.target)) {
     popupContainer.innerHTML = "";
 
-    //document.getElementById("overlay").style.display = "none";
     document.removeEventListener("mousedown", handleOutClick);
   }
 }

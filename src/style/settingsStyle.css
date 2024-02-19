@@ -31,6 +31,9 @@
 }
 .buttons-settings{
   background-color: rgb(230, 88, 88);
+  width: 20%;
+  height: 50%;
+  border-radius: 10px;
 
 }
 #list {
@@ -41,6 +44,10 @@
 .site{
   color: #494949;
   font-size: large;
+  border-bottom: 1px solid #a29e9e;
+  height: 40px;
+  margin-top: 5px;
+  margin-left: 5px;
 }
 .deleteButton{
   background-color: #e85e56;
@@ -70,4 +77,10 @@
   align-items: flex-start;
   color: #494949;
   background-color: #f7f1eb;
+}
+#settingsButtons{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
