@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     urlList.forEach((url) => {
       document.querySelector('#list').insertAdjacentHTML('beforeend', `
         <div  class="site" data-value="${element_index}">
-          <div class="key" data-value="${url}">${url}</div>
+          <span class="key" data-value="${url}">${url}</span>
           <button class="deleteButton">delete</button>
         </div>
       `);
