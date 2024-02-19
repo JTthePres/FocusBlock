@@ -16,7 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
       document.querySelector('#list').insertAdjacentHTML('beforeend', `
         <div  class="site" data-value="${element_index}">
           <span class="key" data-value="${url}">${url}</span>
-          <button class="deleteButton">delete</button>
+          <img  alt = "settings" class = "deleteButton" src  = "../../src/style/img/trash-can-solid.png" >
+          </img>
         </div>
       `);
       element_index++;
@@ -123,9 +124,8 @@ function openInportPopup() {
     <div id="popupInport">
         <div id="closePopup">&times;</div>
         <input type="file" id="fileInput"  />
-
-        <button  id ="importBtn">ImportFile
-        </button>
+        <img alt = "settings" id = "importBtn" src  = "../../src/style/img/upload.png" >
+        </img>
     </div>
   `;  
   document.addEventListener("mousedown", handleOutClick);
@@ -134,12 +134,13 @@ function openInportPopup() {
   popupContainer.innerHTML = "";
   });
 }
+
 function importAll() {
 
   var reader = new FileReader();
   reader.addEventListener('load', function() {
     deleteAll();
-    cleanNetBlockList();
+    resetStatus();
     var result = JSON.parse(reader.result);
     console.log(result);
     chrome.storage.sync.set(result, () => {
