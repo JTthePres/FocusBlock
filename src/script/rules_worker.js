@@ -29,3 +29,15 @@ function createNetBlockList() {
       }
     }); 
   }
+function resetStatus() {
+  chrome.storage.local.set({ blockStatus: "OFF" }, function () {
+    console.log("Block status set to OFF");
+    cleanNetBlockList();
+  });
+}
+function onStatus() {
+  chrome.storage.local.set({ blockStatus: "ON" }, function () {
+    console.log("Block status set to ON");
+    createNetBlockList();
+  });
+}

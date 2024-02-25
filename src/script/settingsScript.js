@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("deleteAll").addEventListener("click", deleteAll);
   document.getElementById("exportBtn").addEventListener("click", exportAll);
-  document.getElementById("importBtn").addEventListener("click", importAll);
+  document.getElementById("openInportMenu").addEventListener("click", openInportPopup);
 
 
   chrome.storage.sync.get({ urlList: [] }, (data) => {
@@ -15,8 +15,9 @@ document.addEventListener("DOMContentLoaded", function () {
     urlList.forEach((url) => {
       document.querySelector('#list').insertAdjacentHTML('beforeend', `
         <div  class="site" data-value="${element_index}">
-          <div class="key" data-value="${url}">${url}</div>
-          <button class="deleteButton">delete</button>
+          <span class="key" data-value="${url}">${url}</span>
+          <img  alt = "settings" class = "deleteButton" src  = "../../src/style/img/trash-can-solid.png" >
+          </img>
         </div>
       `);
       element_index++;
@@ -116,12 +117,30 @@ function exportAll(params) {
     });
 });
 }
+function openInportPopup() {
+  popupContainer = document.getElementById("popupContainer");
+
+  popupContainer.innerHTML = `
+    <div id="popupInport">
+        <div id="closePopup">&times;</div>
+        <input type="file" id="fileInput"  />
+        <img alt = "settings" id = "importBtn" src  = "../../src/style/img/upload.png" >
+        </img>
+    </div>
+  `;  
+  document.addEventListener("mousedown", handleOutClick);
+  document.getElementById("importBtn").addEventListener("click", importAll);
+  document.querySelector("#closePopup").addEventListener("click", function() {
+  popupContainer.innerHTML = "";
+  });
+}
+
 function importAll() {
 
   var reader = new FileReader();
   reader.addEventListener('load', function() {
     deleteAll();
-    cleanNetBlockList();
+    resetStatus();
     var result = JSON.parse(reader.result);
     console.log(result);
     chrome.storage.sync.set(result, () => {
@@ -134,3 +153,11 @@ function importAll() {
   createNetBlockList();
 }
 });
+function handleOutClick(event) {
+  popupContainer = document.getElementById("popupContainer");
+  if (!popupContainer.contains(event.target)) {
+    popupContainer.innerHTML = "";
+
+    document.removeEventListener("mousedown", handleOutClick);
+  }
+}

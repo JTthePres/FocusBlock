@@ -8,17 +8,17 @@
         <body>
         <div id="settingsPanel">
             <div id="settingsTitle">Settings</div>
-            <div id="settingsButtons"><button class="buttons" id="deleteAll">Delete All</button></div>
-        </div>
+            <div id="settingsButtons"><button class="buttons buttons-settings" id="deleteAll">Delete All</button>
+            <button class="buttons buttons-settings" id ="exportBtn">Export List</button>
+            <button class="buttons buttons-settings" id ="openInportMenu">Import List</button>
+            </div>
+
         
+        <div id="contentPanel">
         <div id="list"></div>
-        <button id ="exportBtn">Export List</button>
-        <input type="file" id="fileInput"  />
+<div id="popupContainer"></div>
 
-        <button  id ="importBtn">ImportFile
-        </button>
-
-        
+    </div>    
     </body>   
 
     <script type="application/javascript" src="../../src/script/settingsScript.js"> </script> 
