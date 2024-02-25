@@ -6,26 +6,22 @@ document.getElementById("settingsButton").addEventListener("click",function () {
   chrome.tabs.create({ url: chrome.runtime.getURL("../src/pages/settingsPage.html") });
 });
 
+//create an item on the storage for the site and then call the function to add the rule
   function addSite() {
     var storageLen;
-      // Query per l'URL della pagina attualmente attiva
       chrome.storage.local.get(['blockStatus'], function (result) {
         let blockStatus = result.blockStatus;
         chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
         const current_urll = new URL(tabs[0].url);
         const url = current_urll.origin;
         chrome.storage.sync.get({ urlList: [] }, (data) => {
-          // Recupera l'array urlList dallo storage o inizializzalo come un array vuoto se non esiste
           let urlList = data.urlList || [];
         
-          // Aggiungi il nuovo URL alla fine dell'array
           urlList.push(url);
         
-          // Salva l'array aggiornato nello storage di sincronizzazione
           chrome.storage.sync.set({ urlList: urlList }, () => {
             console.log("URL aggiunto in ultima posizione alla lista.");
             updateUI();
-            //if(checkStatus())
             if (blockStatus == "ON") {
               addNetBlockList(url, urlList.length );}
 
@@ -48,6 +44,7 @@ document.getElementById("settingsButton").addEventListener("click",function () {
     }, 1000);
   }});
 
+  //create a rule from one url 
 function addNetBlockList(url,storageLen) {
 
 console.log(storageLen);

@@ -1,4 +1,3 @@
-// Assume your HTML element has an ID 'customCheckbox'
 const toggle = document.getElementById('customCheckbox');
 
 // Set the initial state of the toggle based on the stored blockStatus

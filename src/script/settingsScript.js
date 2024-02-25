@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("exportBtn").addEventListener("click", exportAll);
   document.getElementById("openInportMenu").addEventListener("click", openInportPopup);
 
-
+//recover list
   chrome.storage.sync.get({ urlList: [] }, (data) => {
     let urlList = data.urlList;
     updateUI(urlList);
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
           
 
-  
+//delete of single item  
 function manageDelete(event,element_index) {
   var key = event.currentTarget.parentNode.children[0].getAttribute("data-value");
   console.log(key);
@@ -104,7 +104,7 @@ function deleteAll() {
   document.querySelector('#list').innerHTML = '';
 
 }
-function exportAll(params) {
+function exportAll() {
   chrome.storage.sync.get(null, function(items) { 
     // Convert object to a string.
     var result = JSON.stringify(items);
@@ -117,6 +117,8 @@ function exportAll(params) {
     });
 });
 }
+
+//open the popup menu for import
 function openInportPopup() {
   popupContainer = document.getElementById("popupContainer");
 
@@ -135,6 +137,7 @@ function openInportPopup() {
   });
 }
 
+//import the list
 function importAll() {
 
   var reader = new FileReader();
@@ -153,6 +156,8 @@ function importAll() {
   createNetBlockList();
 }
 });
+
+//aux for popup menu
 function handleOutClick(event) {
   popupContainer = document.getElementById("popupContainer");
   if (!popupContainer.contains(event.target)) {
