@@ -7,4 +7,4 @@ In the settings menu it's possible to see the current list, manage it and export
 **Technologies used:**
 - chrome.storage API --> to store the url list;
 
--NetDeclarativeRequest API --> to create redirect rules to a splash screen when surfing to a blocked site. All rules are initialised only when focus mode is turned on, turning off will clear all rules.
+- NetDeclarativeRequest API --> to create redirect rules to a splash screen when surfing to a blocked site. All rules are initialised only when focus mode is turned on, turning off will clear all rules.
